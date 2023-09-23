@@ -60,7 +60,9 @@ void editTask() {
 // Function to delete a task
 void deleteTask(int taskID) {
     int found = 0;
-
+// Function to compare tasks by deadline for sorting
+int compareByDeadline(const struct Task a, const struct Task b) {
+    return strcmp(a.deadline, b.deadline);
     for (int i = 0; i < tas_i; i++) {
         if (tasks[i].id == taskID) {
             found = 1;
@@ -81,10 +83,7 @@ void deleteTask(int taskID) {
     }
 }
 
-// Function to compare tasks by title for sorting
-//int compareByTitle(const struct Task a, const struct Task b) {
-//    return strcmp(a.title, b.title);
-//}
+
 
 // Function to compare tasks by deadline for sorting
 int compareByDeadline(const struct Task a, const struct Task b) {
@@ -234,7 +233,7 @@ int main() {
             case 6:
                 return 0; // Exit the program
             default:
-                printf("Invalid choice. Please enter a valid option.\n");
+                printf("Incorrect choice chose another one.\n");
         }
     }
 
