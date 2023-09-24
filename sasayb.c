@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Structure to represent a task
+// Structure of the  task
 struct Task {
     int id;
     char title[100];
@@ -14,7 +14,7 @@ struct Task {
 int tas_i = 0;
 struct Task tasks[100];
 
-// Function to add a new task
+// Function to make  a new task
 void addTask() {
     printf("Enter the title of the task: ");
     scanf("%99s", tasks[tas_i].title);
@@ -22,7 +22,7 @@ void addTask() {
     printf("Enter the description of the task: ");
     scanf("%99s", tasks[tas_i].description);
 
-    printf("Enter the status of the task: ");
+    printf("Enter the status of the task ' complited' or 'incompleted' or 'in progress'  : ");
     scanf("%99s", tasks[tas_i].status);
 
     printf("Enter the deadline for the task (DD/MM/YYYY): ");
@@ -33,13 +33,13 @@ void addTask() {
     printf("Task added successfully!\n");
 }
 
-// Function to edit a task
+// Function to edit the  task
 void editTask() {
     int taskID;
     printf("Enter the ID of the task you want to edit: ");
     scanf("%d", &taskID);
 
-    for (int i = 0; i < tas_i; i++) {
+    for (int i = 0; i < tas_i; i++) { 
         if (tasks[i].id == taskID) {
             printf("Enter the new title, description, status, and deadline for your task:\n");
             scanf("%99s %99s %99s %99s", tasks[i].title, tasks[i].description, tasks[i].status, tasks[i].deadline);
@@ -57,15 +57,12 @@ void editTask() {
     printf("Task with ID %d not found.\n", taskID);
 }
 
-// Function to delete a task
+// Function to delete the task
 void deleteTask(int taskID) {
-    int found = 0;
-// Function to compare tasks by deadline for sorting
-int compareByDeadline(const struct Task a, const struct Task b) {
-    return strcmp(a.deadline, b.deadline);
+    int check = 0;
     for (int i = 0; i < tas_i; i++) {
         if (tasks[i].id == taskID) {
-            found = 1;
+            check = 1;
 
             for (int j = i; j < tas_i - 1; j++) {
                 tasks[j] = tasks[j + 1];
@@ -78,18 +75,14 @@ int compareByDeadline(const struct Task a, const struct Task b) {
         }
     }
 
-    if (!found) {
+    if (!check) {
         printf("Task with ID %d not found.\n", taskID);
     }
 }
-
-
-
 // Function to compare tasks by deadline for sorting
 int compareByDeadline(const struct Task a, const struct Task b) {
     return strcmp(a.deadline, b.deadline);
 }
-
 // Function to display tasks
 void ShowTasks() {
     int choice;
@@ -98,7 +91,7 @@ void ShowTasks() {
     printf("2 - Deadline order\n");
     printf("Enter your choice: ");
     scanf("%d", &choice);
-
+     
     // Sort tasks based on user choice
     if (choice == 1) {
         struct Task temp;
@@ -123,7 +116,7 @@ void ShowTasks() {
             }
         }
     } else {
-        printf("Invalid choice. Please enter 1 or 2.\n");
+        printf("Incorrect choice. Please enter 1 or 2.\n");
         return;
     }
 
@@ -153,10 +146,10 @@ void searchTask() {
         printf("Enter the ID of the task you want to search for: ");
         scanf("%d", &taskID);
 
-        int found = 0;
+        int check = 0;
         for (int i = 0; i < tas_i; i++) {
             if (tasks[i].id == taskID) {
-                found = 1;
+                check = 1;
                 printf("Task found:\n");
                 printf("ID: %d\n", tasks[i].id);
                 printf("Title: %s\n", tasks[i].title);
@@ -167,7 +160,7 @@ void searchTask() {
             }
         }
 
-        if (!found) {
+        if (!check) {
             printf("Task with ID %d not found.\n", taskID);
         }
     } else if (choice2 == 2) {
@@ -176,10 +169,10 @@ void searchTask() {
         printf("Enter the title of the task you want to search for: ");
         scanf("%99s", searchTitle);
 
-        int found = 0;
+        int check = 0;
         for (int i = 0; i < tas_i; i++) {
             if (strcmp(tasks[i].title, searchTitle) == 0) {
-                found = 1;
+                check = 1;
                 printf("Task found:\n");
                 printf("ID: %d\n", tasks[i].id);
                 printf("Title: %s\n", tasks[i].title);
@@ -189,7 +182,7 @@ void searchTask() {
             }
         }
 
-        if (!found) {
+        if (!check) {
             printf("Task with title '%s' not found.\n", searchTitle);
         }
     } else {
@@ -207,7 +200,8 @@ int main() {
         printf("3 - Delete a task\n");
         printf("4 - Show tasks\n");
         printf("5 - Search for a task\n");
-        printf("6 - Exit\n");
+        printf("6 - to show statistiques\n");
+        printf("7 - to exit:\n");
         printf("Enter your choice here: ");
         scanf("%d", &choice);
 
@@ -230,8 +224,33 @@ int main() {
             case 5:
                 searchTask();
                 break;
-            case 6:
-                return 0; // Exit the program
+            case 6: 
+                int c;
+                printf("choose 1 to show the total number of tasks: \n");
+                printf("choose 2 to show the number of complited tasks and non complited tasks:\n");
+                printf("choose 3 to show the number of days left for the task to be delayed:\n");
+                scanf("%d",&c);
+                if(c==1){
+               printf("the total number of your tasks is %d\n",tas_i);
+               }
+               else if(c==2) {
+		int comp = 0;
+		int incomp = 0;
+		for ( int i =0 ;i<tas_i;i++){
+		if (strcmp(tasks[i].status,"complited")==0)
+		comp ++;
+		
+		else  
+		incomp++;
+		
+		}
+               printf("the number of complited and incomplited tasks\n");
+		printf("Completed tasks:%d\n",comp);
+		printf("Incompleted tasks:%d\n",incomp);
+              }
+                break;
+            case 7:
+                return 0;;
             default:
                 printf("Incorrect choice chose another one.\n");
         }
